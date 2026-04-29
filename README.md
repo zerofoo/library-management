@@ -8,8 +8,8 @@ A comprehensive ASP.NET Core MVC application for managing library operations wit
 |------------|-----------|
 | 20028856 | Bibisha Pokharel |
 | 20030378 | Shuvam Kumar Thakur |
-| - | Santosh Kathayat |
-| - | Dipti Giri |
+| 20031634 | Santosh Kathayat |
+| 20030539 | Dipti Giri |
 
 ## Features
 
