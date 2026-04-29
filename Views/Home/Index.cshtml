@@ -1,0 +1,91 @@
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="home-hero">
+    <h1>Welcome to the Library Management System</h1>
+    <p class="hero-subtitle">Your gateway to knowledge and learning</p>
+</div>
+
+<div class="group-details-section">
+    <h2>Group Members</h2>
+    <table class="group-table">
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>Full Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>2021001</td>
+                <td>John Michael Smith</td>
+            </tr>
+            <tr>
+                <td>2021002</td>
+                <td>Sarah Jane Williams</td>
+            </tr>
+            <tr>
+                <td>2021003</td>
+                <td>David Robert Johnson</td>
+            </tr>
+            <tr>
+                <td>2021004</td>
+                <td>Emily Grace Davis</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+@if (ViewBag.FeaturedBooks != null && ((List<Book>)ViewBag.FeaturedBooks).Any())
+{
+    <div class="featured-books-section">
+        <h2>Featured Books</h2>
+        <div class="books-grid">
+            @foreach (var book in (List<Book>)ViewBag.FeaturedBooks)
+            {
+                <div class="book-card">
+                    <div class="book-cover">
+                        @if (!string.IsNullOrEmpty(book.CoverImagePath))
+                        {
+                            <img src="@book.CoverImagePath" alt="@book.Title" />
+                        }
+                        else
+                        {
+                            <div class="book-cover-placeholder">
+                                <span>📖</span>
+                            </div>
+                        }
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">@book.Title</h3>
+                        <p class="book-author">by @book.Author</p>
+                        <p class="book-genre">@book.Genre</p>
+                        <div class="book-availability">
+                            @if (book.AvailableCopies > 0)
+                            {
+                                <span class="badge badge-available">Available (@book.AvailableCopies copies)</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-unavailable">Out of Stock</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@if (!Context.Session.IsAuthenticated())
+{
+    <div class="cta-section">
+        <h2>Get Started Today</h2>
+        <p>Join our library community to borrow books and access our collection</p>
+        <div class="cta-buttons">
+            <a asp-controller="Account" asp-action="Register" class="btn btn-primary">Register Now</a>
+            <a asp-controller="Account" asp-action="Login" class="btn btn-secondary">Login</a>
+        </div>
+    </div>
+}
