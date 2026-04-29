@@ -1,0 +1,50 @@
+@model BookRating
+@{
+    ViewData["Title"] = "Rate Book";
+}
+
+<div class="page-header">
+    <h1>Rate Book</h1>
+    @if (ViewBag.BookTitle != null)
+    {
+        <p>@ViewBag.BookTitle</p>
+    }
+</div>
+
+<div class="form-container">
+    <form asp-action="RateBook" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="RatingId" />
+        <input type="hidden" asp-for="BookId" />
+        <input type="hidden" asp-for="UserId" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="Rating"></label>
+            <select asp-for="Rating" class="form-control">
+                <option value="">Select Rating</option>
+                <option value="1">⭐ 1 - Poor</option>
+                <option value="2">⭐⭐ 2 - Fair</option>
+                <option value="3">⭐⭐⭐ 3 - Good</option>
+                <option value="4">⭐⭐⭐⭐ 4 - Very Good</option>
+                <option value="5">⭐⭐⭐⭐⭐ 5 - Excellent</option>
+            </select>
+            <span asp-validation-for="Rating" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ReviewText"></label>
+            <textarea asp-for="ReviewText" class="form-control" rows="5" placeholder="Share your thoughts about this book..."></textarea>
+            <span asp-validation-for="ReviewText" class="text-danger"></span>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Submit Rating</button>
+            <a asp-action="History" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,132 @@
+@model BorrowingDashboardViewModel
+@{
+    ViewData["Title"] = "My Borrowing Dashboard";
+}
+
+<div class="dashboard-header">
+    <h1>My Borrowing Dashboard</h1>
+</div>
+
+<div class="borrowing-stats">
+    <div class="stat-item">
+        <strong>Books on Loan:</strong>
+        <span>@Model.BooksOnLoan / @Model.MaxBorrowableItems</span>
+    </div>
+    <div class="stat-item">
+        <strong>Total Fines:</strong>
+        <span class="@(Model.TotalFines > 0 ? "text-danger" : "")">$@Model.TotalFines.ToString("F2")</span>
+    </div>
+    <div class="stat-item">
+        <strong>Can Borrow More:</strong>
+        <span class="@(Model.CanBorrowMore ? "text-success" : "text-danger")">
+            @(Model.CanBorrowMore ? "Yes" : "No")
+        </span>
+    </div>
+</div>
+
+@if (Model.OverdueBorrows.Any())
+{
+    <div class="section">
+        <h2>Overdue Books</h2>
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Book</th>
+                        <th>Due Date</th>
+                        <th>Days Overdue</th>
+                        <th>Fine Amount</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var borrow in Model.OverdueBorrows)
+                    {
+                        <tr class="overdue-row">
+                            <td>@borrow.Book?.Title</td>
+                            <td>@borrow.DueDate.ToString("MMMM dd, yyyy")</td>
+                            <td>@borrow.DaysOverdue days</td>
+                            <td>$@borrow.FineAmount.ToString("F2")</td>
+                            <td>
+                                <span class="text-danger">Please return this book</span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+@if (Model.ActiveBorrows.Any())
+{
+    <div class="section">
+        <h2>Currently Borrowed Books</h2>
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Book</th>
+                        <th>Borrow Date</th>
+                        <th>Due Date</th>
+                        <th>Renewals Used</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var borrow in Model.ActiveBorrows)
+                    {
+                        <tr>
+                            <td>@borrow.Book?.Title</td>
+                            <td>@borrow.BorrowDate.ToString("MMMM dd, yyyy")</td>
+                            <td>@borrow.DueDate.ToString("MMMM dd, yyyy")</td>
+                            <td>@borrow.RenewalCount</td>
+                            <td>
+                                <form asp-controller="Borrowing" asp-action="RenewBook" asp-route-transactionId="@borrow.TransactionId" method="post" style="display:inline;">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-sm btn-primary">Renew</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+@if (Model.ReservedBooks.Any())
+{
+    <div class="section">
+        <h2>Reserved Books</h2>
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Book</th>
+                        <th>Reserved Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var borrow in Model.ReservedBooks)
+                    {
+                        <tr>
+                            <td>@borrow.Book?.Title</td>
+                            <td>@borrow.BorrowDate.ToString("MMMM dd, yyyy")</td>
+                            <td><span class="badge badge-warning">Reserved</span></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+@if (!Model.ActiveBorrows.Any() && !Model.OverdueBorrows.Any() && !Model.ReservedBooks.Any())
+{
+    <div class="empty-state">
+        <p>You don't have any active borrowings.</p>
+        <a asp-action="Browse" class="btn btn-primary">Browse Books</a>
+    </div>
+}

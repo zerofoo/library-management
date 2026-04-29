@@ -1,0 +1,193 @@
+@model ReportViewModel
+@{
+    ViewData["Title"] = "Reports & Analytics";
+}
+
+<div class="page-header">
+    <h1>Reports & Analytics</h1>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon">📚</div>
+        <div class="stat-info">
+            <h3>@Model.TotalBooks</h3>
+            <p>Total Books</p>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-info">
+            <h3>@Model.TotalMembers</h3>
+            <p>Total Members</p>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">📖</div>
+        <div class="stat-info">
+            <h3>@Model.ActiveBorrows</h3>
+            <p>Active Borrows</p>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">💰</div>
+        <div class="stat-info">
+            <h3>$@Model.TotalFinesCollected.ToString("F2")</h3>
+            <p>Fines Collected</p>
+        </div>
+    </div>
+</div>
+
+@if (Model.BorrowingTrends.Any())
+{
+    <div class="report-section">
+        <h2>Borrowing Trends (Last 6 Months)</h2>
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Total Borrows</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var trend in Model.BorrowingTrends)
+                    {
+                        <tr>
+                            <td>@trend.Month</td>
+                            <td>@trend.BorrowCount</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+@if (Model.OverdueBooks.Any())
+{
+    <div class="report-section">
+        <h2>Overdue Books</h2>
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Member</th>
+                        <th>Book</th>
+                        <th>Due Date</th>
+                        <th>Days Overdue</th>
+                        <th>Fine Amount</th>
+                        <th>Fine Paid</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var transaction in Model.OverdueBooks)
+                    {
+                        <tr class="overdue-row">
+                            <td>
+                                <strong>@transaction.User?.FullName</strong><br />
+                                <small>@transaction.User?.Email</small>
+                            </td>
+                            <td>@transaction.Book?.Title</td>
+                            <td>@transaction.DueDate.ToString("MMM dd, yyyy")</td>
+                            <td>@transaction.DaysOverdue days</td>
+                            <td class="text-danger">$@transaction.FineAmount.ToString("F2")</td>
+                            <td>
+                                @if (transaction.FinePaid)
+                                {
+                                    <span class="badge badge-success">Paid</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger">Unpaid</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+@if (Model.MostActiveMembers.Any())
+{
+    <div class="report-section">
+        <h2>Most Active Members (Top 10)</h2>
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Member Name</th>
+                        <th>Email</th>
+                        <th>Total Borrows</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int rank = 1; }
+                    @foreach (var member in Model.MostActiveMembers)
+                    {
+                        <tr>
+                            <td>@rank</td>
+                            <td>@member.MemberName</td>
+                            <td>@member.Email</td>
+                            <td>@member.BorrowCount</td>
+                        </tr>
+                        rank++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+@if (Model.MostPopularBooks.Any())
+{
+    <div class="report-section">
+        <h2>Most Popular Books (Top 10)</h2>
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Book Title</th>
+                        <th>Author</th>
+                        <th>Total Borrows</th>
+                        <th>Avg Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int bookRank = 1; }
+                    @foreach (var book in Model.MostPopularBooks)
+                    {
+                        <tr>
+                            <td>@bookRank</td>
+                            <td>@book.BookTitle</td>
+                            <td>@book.Author</td>
+                            <td>@book.BorrowCount</td>
+                            <td>
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    if (i <= book.AverageRating)
+                                    {
+                                        <span class="star filled">★</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="star">☆</span>
+                                    }
+                                }
+                                <small>(@book.AverageRating.ToString("F1"))</small>
+                            </td>
+                        </tr>
+                        bookRank++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

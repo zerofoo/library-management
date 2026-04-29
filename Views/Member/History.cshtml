@@ -1,0 +1,73 @@
+@model List<BorrowingTransaction>
+@{
+    ViewData["Title"] = "Borrowing History";
+}
+
+<div class="page-header">
+    <h1>My Borrowing History</h1>
+</div>
+
+<div class="table-container">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Book</th>
+                <th>Borrow Date</th>
+                <th>Due Date</th>
+                <th>Return Date</th>
+                <th>Fine Amount</th>
+                <th>Fine Paid</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var transaction in Model)
+            {
+                <tr>
+                    <td>@transaction.Book?.Title</td>
+                    <td>@transaction.BorrowDate.ToString("MMM dd, yyyy")</td>
+                    <td>@transaction.DueDate.ToString("MMM dd, yyyy")</td>
+                    <td>@transaction.ReturnDate?.ToString("MMM dd, yyyy")</td>
+                    <td>
+                        @if (transaction.FineAmount > 0)
+                        {
+                            <span class="text-danger">$@transaction.FineAmount.ToString("F2")</span>
+                        }
+                        else
+                        {
+                            <span>$0.00</span>
+                        }
+                    </td>
+                    <td>
+                        @if (transaction.FineAmount > 0)
+                        {
+                            if (transaction.FinePaid)
+                            {
+                                <span class="badge badge-success">Paid</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-danger">Unpaid</span>
+                            }
+                        }
+                        else
+                        {
+                            <span>-</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="RateBook" asp-route-transactionId="@transaction.TransactionId" class="btn btn-sm btn-primary">Rate Book</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state">
+            <p>You haven't borrowed any books yet.</p>
+            <a asp-action="Browse" class="btn btn-primary">Browse Books</a>
+        </div>
+    }
+</div>

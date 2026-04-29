@@ -1,0 +1,125 @@
+@model List<BorrowingTransaction>
+@{
+    ViewData["Title"] = "Manage Borrowing Transactions";
+}
+
+<div class="page-header">
+    <h1>Manage Borrowing Transactions</h1>
+</div>
+
+<div class="filter-section">
+    <form method="get" class="filter-form">
+        <div class="filter-group">
+            <select name="status" class="form-control">
+                <option value="">All Statuses</option>
+                <option value="Borrowed" selected="@(ViewBag.Status == "Borrowed")">Borrowed</option>
+                <option value="Reserved" selected="@(ViewBag.Status == "Reserved")">Reserved</option>
+                <option value="Overdue" selected="@(ViewBag.Status == "Overdue")">Overdue</option>
+                <option value="Returned" selected="@(ViewBag.Status == "Returned")">Returned</option>
+            </select>
+            <button type="submit" class="btn btn-secondary">Filter</button>
+            <a asp-action="ManageTransactions" class="btn btn-secondary">Clear</a>
+        </div>
+    </form>
+</div>
+
+<div class="table-container">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Member</th>
+                <th>Book</th>
+                <th>Borrow Date</th>
+                <th>Due Date</th>
+                <th>Return Date</th>
+                <th>Status</th>
+                <th>Fine</th>
+                <th>Fine Paid</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var transaction in Model)
+            {
+                <tr class="@(transaction.Status == "Overdue" ? "overdue-row" : "")">
+                    <td>
+                        <strong>@transaction.User?.FullName</strong><br />
+                        <small>@transaction.User?.Email</small>
+                    </td>
+                    <td>@transaction.Book?.Title</td>
+                    <td>@transaction.BorrowDate.ToString("MMM dd, yyyy")</td>
+                    <td>@transaction.DueDate.ToString("MMM dd, yyyy")</td>
+                    <td>@(transaction.ReturnDate?.ToString("MMM dd, yyyy") ?? "-")</td>
+                    <td>
+                        @if (transaction.Status == "Borrowed")
+                        {
+                            <span class="badge badge-success">Borrowed</span>
+                        }
+                        else if (transaction.Status == "Overdue")
+                        {
+                            <span class="badge badge-danger">Overdue</span>
+                        }
+                        else if (transaction.Status == "Reserved")
+                        {
+                            <span class="badge badge-warning">Reserved</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-secondary">Returned</span>
+                        }
+                    </td>
+                    <td>
+                        @if (transaction.FineAmount > 0)
+                        {
+                            <span class="text-danger">$@transaction.FineAmount.ToString("F2")</span>
+                        }
+                        else
+                        {
+                            <span>-</span>
+                        }
+                    </td>
+                    <td>
+                        @if (transaction.FineAmount > 0)
+                        {
+                            if (transaction.FinePaid)
+                            {
+                                <span class="badge badge-success">Paid</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-danger">Unpaid</span>
+                            }
+                        }
+                        else
+                        {
+                            <span>-</span>
+                        }
+                    </td>
+                    <td class="action-buttons">
+                        @if (transaction.Status != "Returned")
+                        {
+                            <form asp-action="MarkAsReturned" asp-route-transactionId="@transaction.TransactionId" method="post" style="display:inline;">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-sm btn-success">Mark Returned</button>
+                            </form>
+                        }
+                        @if (transaction.FineAmount > 0 && !transaction.FinePaid)
+                        {
+                            <form asp-action="MarkFinePaid" asp-route-transactionId="@transaction.TransactionId" method="post" style="display:inline;">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-sm btn-primary">Mark Paid</button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state">
+            <p>No borrowing transactions found.</p>
+        </div>
+    }
+</div>
