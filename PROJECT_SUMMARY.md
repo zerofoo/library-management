@@ -160,7 +160,8 @@ dotnet run
 
 ### Default Credentials:
 - **Librarian**: librarian@library.com / Librarian123
-- **Member**: john.doe@email.com / Member123
+- **Member**: bibi.dip@email.com / Member123
+- **Member**: san.vam@email.com / Member123
 
 ### Access:
 Open browser to `https://localhost:5001`

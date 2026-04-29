@@ -98,7 +98,7 @@ namespace LibraryManagementSystem.Data
                 new User
                 {
                     UserId = 2,
-                    Email = "john.doe@email.com",
+                    Email = "bibi.dip@email.com",
                     Password = BCrypt.Net.BCrypt.HashPassword("Member123"),
                     Role = "Member",
                     FirstName = "John",
@@ -110,7 +110,7 @@ namespace LibraryManagementSystem.Data
                 new User
                 {
                     UserId = 3,
-                    Email = "jane.smith@email.com",
+                    Email = "san.vam@email.com",
                     Password = BCrypt.Net.BCrypt.HashPassword("Member123"),
                     Role = "Member",
                     FirstName = "Jane",

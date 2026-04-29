@@ -45,7 +45,7 @@ Open browser to `https://localhost:5001`
 - Password: `Librarian123`
 
 **Member Login:**
-- Email: `john.doe@email.com`
+- Email: `bibi.dip@email.com` or `san.vam@email.com`
 - Password: `Member123`
 
 ## Common Issues & Solutions

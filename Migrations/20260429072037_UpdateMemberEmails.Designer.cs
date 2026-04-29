@@ -4,6 +4,7 @@ using LibraryManagementSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryManagementSystem.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    partial class LibraryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260429072037_UpdateMemberEmails")]
+    partial class UpdateMemberEmails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -394,7 +397,7 @@ namespace LibraryManagementSystem.Migrations
                             FirstName = "Admin",
                             IsActive = true,
                             LastName = "Librarian",
-                            Password = "$2a$11$GGnSniY13qp3ciEwdQ67vuWCb1BPn6B2r2SAVKSKFfG0gl3wdiGW6",
+                            Password = "$2a$11$LkfJTaJC.5Rc/f71MkE4nO7JNnjC8nj1LlnHasftQ4CHVhl53agVy",
                             PhoneNumber = "555-0100",
                             RegistrationDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Role = "Librarian"
@@ -406,7 +409,7 @@ namespace LibraryManagementSystem.Migrations
                             FirstName = "John",
                             IsActive = true,
                             LastName = "Doe",
-                            Password = "$2a$11$UHU5.NceGVUaqv02QDTEnOxGMIsfUOsg.Fb9grGf1IBsMsuslo7i2",
+                            Password = "$2a$11$sfjSG/nNtx.InDy.gx63beBJiU.eR8t4ib00Y5SyQ1Jr9LnseYLKi",
                             PhoneNumber = "555-0101",
                             RegistrationDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Role = "Member"
@@ -418,7 +421,7 @@ namespace LibraryManagementSystem.Migrations
                             FirstName = "Jane",
                             IsActive = true,
                             LastName = "Smith",
-                            Password = "$2a$11$HKruOAbso0ogBJQNlspMzeUh5IU0oULSG7vfQ5ygtN72T5p7olOpG",
+                            Password = "$2a$11$89rqjRPvYUfM0RLymF.WbOZnE8PO1f8vvv4y.baaXH..Kj4QRyoZK",
                             PhoneNumber = "555-0102",
                             RegistrationDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Role = "Member"

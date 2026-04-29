@@ -116,8 +116,8 @@ The application will launch at `https://localhost:5001` (or the port shown in yo
 - **Password**: Librarian123
 
 ### Member Accounts
-- **Email**: john.doe@email.com | **Password**: Member123
-- **Email**: jane.smith@email.com | **Password**: Member123
+- **Email**: bibi.dip@email.com | **Password**: Member123
+- **Email**: san.vam@email.com | **Password**: Member123
 
 ## Project Structure
 
