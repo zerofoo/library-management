@@ -1,0 +1,93 @@
+@using LibraryManagementSystem.Helpers
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Library Management System</title>
+    <link rel="stylesheet" href="~/css/custom-styles.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a asp-controller="Home" asp-action="Index" class="brand-logo">
+                        <span class="logo-icon">📚</span>
+                        <span class="logo-text">Library Management</span>
+                    </a>
+                </div>
+                <ul class="navbar-menu">
+                    @if (Context.Session.IsAuthenticated())
+                    {
+                        var userRole = Context.Session.GetUserRole();
+                        var userName = Context.Session.GetUserName();
+
+                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+
+                        @if (userRole == "Librarian")
+                        {
+                            <li><a asp-controller="Librarian" asp-action="Dashboard">Dashboard</a></li>
+                            <li><a asp-controller="Book" asp-action="Index">Books</a></li>
+                            <li><a asp-controller="Borrowing" asp-action="ManageTransactions">Borrowing</a></li>
+                            <li><a asp-controller="Report" asp-action="Index">Reports</a></li>
+                            <li><a asp-controller="Librarian" asp-action="Profile">Profile</a></li>
+                        }
+                        else if (userRole == "Member")
+                        {
+                            <li><a asp-controller="Member" asp-action="Browse">Browse Books</a></li>
+                            <li><a asp-controller="Member" asp-action="Dashboard">My Borrowing</a></li>
+                            <li><a asp-controller="Member" asp-action="History">History</a></li>
+                        }
+
+                        <li class="user-menu">
+                            <span class="user-name">@userName</span>
+                            <form asp-controller="Account" asp-action="Logout" method="post" class="logout-form">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn-logout">Logout</button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li><a asp-controller="Account" asp-action="Login">Login</a></li>
+                        <li><a asp-controller="Account" asp-action="Register">Register</a></li>
+                    }
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-error">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
+
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Library Management System. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation-unobtrusive@3.2.12/dist/jquery.validate.unobtrusive.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
