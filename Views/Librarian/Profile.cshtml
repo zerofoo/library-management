@@ -1,0 +1,75 @@
+@model LibraryProfile
+@{
+    ViewData["Title"] = "Library Profile";
+}
+
+<div class="page-header">
+    <h1>Library Profile</h1>
+</div>
+
+@if (Model == null)
+{
+    <div class="empty-state">
+        <p>You haven't created a library profile yet.</p>
+        <a asp-action="CreateProfile" class="btn btn-primary">Create Library Profile</a>
+    </div>
+}
+else
+{
+    <div class="profile-card">
+        <h2>@Model.LibraryName</h2>
+        <div class="profile-details">
+            <div class="detail-item">
+                <strong>Location:</strong>
+                <span>@Model.Location</span>
+            </div>
+            <div class="detail-item">
+                <strong>Operating Hours:</strong>
+                <span>@Model.OperatingHours</span>
+            </div>
+            <div class="detail-item">
+                <strong>Contact Email:</strong>
+                <span>@Model.ContactEmail</span>
+            </div>
+            <div class="detail-item">
+                <strong>Contact Phone:</strong>
+                <span>@Model.ContactPhone</span>
+            </div>
+            <div class="detail-item">
+                <strong>Created Date:</strong>
+                <span>@Model.CreatedDate.ToString("MMMM dd, yyyy")</span>
+            </div>
+        </div>
+        <div class="profile-actions">
+            <a asp-action="EditProfile" asp-route-id="@Model.LibraryId" class="btn btn-primary">Edit Profile</a>
+        </div>
+    </div>
+
+    @if (Model.Configuration != null)
+    {
+        <div class="profile-card">
+            <h2>Borrowing Configuration</h2>
+            <div class="profile-details">
+                <div class="detail-item">
+                    <strong>Loan Duration:</strong>
+                    <span>@Model.Configuration.LoanDurationDays days</span>
+                </div>
+                <div class="detail-item">
+                    <strong>Maximum Renewals:</strong>
+                    <span>@Model.Configuration.MaxRenewals times</span>
+                </div>
+                <div class="detail-item">
+                    <strong>Maximum Borrowable Items:</strong>
+                    <span>@Model.Configuration.MaxBorrowableItems items</span>
+                </div>
+                <div class="detail-item">
+                    <strong>Overdue Penalty:</strong>
+                    <span>$@Model.Configuration.OverduePenaltyPerDay per day</span>
+                </div>
+            </div>
+            <div class="profile-actions">
+                <a asp-action="EditConfiguration" asp-route-id="@Model.LibraryId" class="btn btn-primary">Edit Configuration</a>
+            </div>
+        </div>
+    }
+}

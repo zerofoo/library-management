@@ -1,0 +1,96 @@
+@model Book
+@{
+    ViewData["Title"] = "Edit Book";
+}
+
+<div class="page-header">
+    <h1>Edit Book</h1>
+</div>
+
+<div class="form-container">
+    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="BookId" />
+        <input type="hidden" asp-for="DateAdded" />
+        <input type="hidden" asp-for="CoverImagePath" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-row">
+            <div class="form-group col-md-8">
+                <label asp-for="Title"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label asp-for="PublicationYear"></label>
+                <input asp-for="PublicationYear" class="form-control" type="number" />
+                <span asp-validation-for="PublicationYear" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="Author"></label>
+                <input asp-for="Author" class="form-control" />
+                <span asp-validation-for="Author" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label asp-for="Genre"></label>
+                <input asp-for="Genre" class="form-control" />
+                <span asp-validation-for="Genre" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ISBN"></label>
+            <input asp-for="ISBN" class="form-control" />
+            <span asp-validation-for="ISBN" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Summary"></label>
+            <textarea asp-for="Summary" class="form-control" rows="4"></textarea>
+            <span asp-validation-for="Summary" class="text-danger"></span>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="TotalCopies"></label>
+                <input asp-for="TotalCopies" class="form-control" type="number" />
+                <span asp-validation-for="TotalCopies" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label asp-for="AvailableCopies"></label>
+                <input asp-for="AvailableCopies" class="form-control" type="number" />
+                <span asp-validation-for="AvailableCopies" class="text-danger"></span>
+            </div>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.CoverImagePath))
+        {
+            <div class="form-group">
+                <label>Current Cover Image</label>
+                <div>
+                    <img src="@Model.CoverImagePath" alt="@Model.Title" style="max-width: 200px;" />
+                </div>
+            </div>
+        }
+
+        <div class="form-group">
+            <label for="coverImage">Update Cover Image</label>
+            <input type="file" name="coverImage" id="coverImage" class="form-control" accept="image/*" />
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

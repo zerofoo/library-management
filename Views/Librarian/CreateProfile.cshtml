@@ -1,0 +1,54 @@
+@model LibraryProfile
+@{
+    ViewData["Title"] = "Create Library Profile";
+}
+
+<div class="page-header">
+    <h1>Create Library Profile</h1>
+</div>
+
+<div class="form-container">
+    <form asp-action="CreateProfile" method="post">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="LibraryName"></label>
+            <input asp-for="LibraryName" class="form-control" />
+            <span asp-validation-for="LibraryName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Location"></label>
+            <input asp-for="Location" class="form-control" />
+            <span asp-validation-for="Location" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="OperatingHours"></label>
+            <input asp-for="OperatingHours" class="form-control" />
+            <span asp-validation-for="OperatingHours" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ContactEmail"></label>
+            <input asp-for="ContactEmail" class="form-control" />
+            <span asp-validation-for="ContactEmail" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ContactPhone"></label>
+            <input asp-for="ContactPhone" class="form-control" />
+            <span asp-validation-for="ContactPhone" class="text-danger"></span>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Create Profile</button>
+            <a asp-action="Dashboard" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

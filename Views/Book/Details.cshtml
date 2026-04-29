@@ -1,0 +1,108 @@
+@model BookDetailsViewModel
+@{
+    ViewData["Title"] = Model.Book.Title;
+}
+
+<div class="book-details-container">
+    <div class="book-details-header">
+        <div class="book-cover-large">
+            @if (!string.IsNullOrEmpty(Model.Book.CoverImagePath))
+            {
+                <img src="@Model.Book.CoverImagePath" alt="@Model.Book.Title" />
+            }
+            else
+            {
+                <div class="book-cover-placeholder-large">📖</div>
+            }
+        </div>
+
+        <div class="book-details-info">
+            <h1>@Model.Book.Title</h1>
+            <p class="book-author">by @Model.Book.Author</p>
+            <div class="book-meta">
+                <span class="badge">@Model.Book.Genre</span>
+                @if (Model.Book.PublicationYear.HasValue)
+                {
+                    <span class="badge">@Model.Book.PublicationYear</span>
+                }
+                @if (!string.IsNullOrEmpty(Model.Book.ISBN))
+                {
+                    <span class="badge">ISBN: @Model.Book.ISBN</span>
+                }
+            </div>
+
+            <div class="rating-display">
+                <span class="rating-stars">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        if (i <= Model.AverageRating)
+                        {
+                            <span class="star filled">★</span>
+                        }
+                        else
+                        {
+                            <span class="star">☆</span>
+                        }
+                    }
+                </span>
+                <span class="rating-text">@Model.AverageRating.ToString("F1") (@Model.TotalRatings reviews)</span>
+            </div>
+
+            <div class="book-availability">
+                @if (Model.Book.AvailableCopies > 0)
+                {
+                    <span class="badge badge-available">Available (@Model.Book.AvailableCopies / @Model.Book.TotalCopies copies)</span>
+                }
+                else
+                {
+                    <span class="badge badge-unavailable">Out of Stock</span>
+                }
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.Book.Summary))
+            {
+                <div class="book-summary">
+                    <h3>Summary</h3>
+                    <p>@Model.Book.Summary</p>
+                </div>
+            }
+
+            <div class="book-actions">
+                <a asp-controller="Book" asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.RecentReviews.Any())
+    {
+        <div class="reviews-section">
+            <h2>Recent Reviews</h2>
+            @foreach (var review in Model.RecentReviews)
+            {
+                <div class="review-card">
+                    <div class="review-header">
+                        <strong>@review.User?.FullName</strong>
+                        <span class="review-rating">
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                if (i <= review.Rating)
+                                {
+                                    <span class="star filled">★</span>
+                                }
+                                else
+                                {
+                                    <span class="star">☆</span>
+                                }
+                            }
+                        </span>
+                    </div>
+                    @if (!string.IsNullOrEmpty(review.ReviewText))
+                    {
+                        <p class="review-text">@review.ReviewText</p>
+                    }
+                    <span class="review-date">@review.DateSubmitted.ToString("MMMM dd, yyyy")</span>
+                </div>
+            }
+        </div>
+    }
+</div>

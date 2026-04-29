@@ -1,0 +1,53 @@
+@{
+    ViewData["Title"] = "Librarian Dashboard";
+    var stats = ViewBag.Stats;
+}
+
+<div class="dashboard-header">
+    <h1>Librarian Dashboard</h1>
+    <p>Manage your library operations</p>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon">📚</div>
+        <div class="stat-info">
+            <h3>@stats.TotalBooks</h3>
+            <p>Total Books</p>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-info">
+            <h3>@stats.TotalMembers</h3>
+            <p>Total Members</p>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">📖</div>
+        <div class="stat-info">
+            <h3>@stats.ActiveBorrows</h3>
+            <p>Active Borrows</p>
+        </div>
+    </div>
+
+    <div class="stat-card stat-card-warning">
+        <div class="stat-icon">⚠️</div>
+        <div class="stat-info">
+            <h3>@stats.OverdueBooks</h3>
+            <p>Overdue Books</p>
+        </div>
+    </div>
+</div>
+
+<div class="quick-actions">
+    <h2>Quick Actions</h2>
+    <div class="action-buttons">
+        <a asp-controller="Book" asp-action="Create" class="btn btn-primary">Add New Book</a>
+        <a asp-controller="Book" asp-action="Index" class="btn btn-secondary">Manage Books</a>
+        <a asp-controller="Borrowing" asp-action="ManageTransactions" class="btn btn-secondary">Manage Borrowing</a>
+        <a asp-controller="Report" asp-action="Index" class="btn btn-secondary">View Reports</a>
+    </div>
+</div>
