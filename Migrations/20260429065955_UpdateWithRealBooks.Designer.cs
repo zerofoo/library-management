@@ -4,6 +4,7 @@ using LibraryManagementSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryManagementSystem.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    partial class LibraryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260429065955_UpdateWithRealBooks")]
+    partial class UpdateWithRealBooks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,138 +74,92 @@ namespace LibraryManagementSystem.Migrations
 
                     b.HasKey("BookId");
 
-                    b.ToTable("Books", (string)null);
+                    b.ToTable("Books");
 
                     b.HasData(
                         new
                         {
                             BookId = 1,
-                            Author = "Robert C. Martin",
-                            AvailableCopies = 3,
+                            Author = "Kristin Hannah",
+                            AvailableCopies = 4,
+                            CoverImagePath = "/images/book-covers/the-women.png",
                             DateAdded = new DateTime(2023, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genre = "Programming",
-                            ISBN = "978-0132350884",
-                            PublicationYear = 2008,
-                            Summary = "A comprehensive guide to writing clean, maintainable code with practical examples and best practices.",
-                            Title = "Clean Code: A Handbook of Agile Software Craftsmanship",
+                            Genre = "Historical Fiction",
+                            ISBN = "978-1250178633",
+                            PublicationYear = 2024,
+                            Summary = "A powerful story of friendship and bravery that changed history. Women who served in the Vietnam War faced challenges that tested their courage and changed lives forever.",
+                            Title = "The Women",
                             TotalCopies = 5
                         },
                         new
                         {
                             BookId = 2,
-                            Author = "Thomas H. Cormen",
-                            AvailableCopies = 2,
+                            Author = "Andrew Heywood",
+                            AvailableCopies = 3,
+                            CoverImagePath = "/images/book-covers/political-ideologies.png",
                             DateAdded = new DateTime(2023, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genre = "Computer Science",
-                            ISBN = "978-0262033848",
-                            PublicationYear = 2009,
-                            Summary = "Comprehensive text on algorithms covering a broad range of topics in depth.",
-                            Title = "Introduction to Algorithms",
-                            TotalCopies = 3
-                        },
-                        new
-                        {
-                            BookId = 3,
-                            Author = "Erich Gamma",
-                            AvailableCopies = 4,
-                            DateAdded = new DateTime(2023, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genre = "Software Engineering",
-                            ISBN = "978-0201633610",
-                            PublicationYear = 1994,
-                            Summary = "Classic book on software design patterns for object-oriented programming.",
-                            Title = "Design Patterns: Elements of Reusable Object-Oriented Software",
+                            Genre = "Political Science",
+                            ISBN = "978-1137606013",
+                            PublicationYear = 2021,
+                            Summary = "The most popular and comprehensive introduction to political ideologies, this best-selling textbook analyzes the major political ideologies of our time.",
+                            Title = "Political Ideologies: An Introduction",
                             TotalCopies = 4
                         },
                         new
                         {
-                            BookId = 4,
-                            Author = "David Thomas",
+                            BookId = 3,
+                            Author = "Lucy Score",
                             AvailableCopies = 5,
+                            CoverImagePath = "/images/book-covers/things-we-never-got-over.png",
+                            DateAdded = new DateTime(2023, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Genre = "Romance",
+                            ISBN = "978-1728282145",
+                            PublicationYear = 2022,
+                            Summary = "He's absolutely not falling for the good girl. A grumpy small-town romance from the Sunday Times and New York Times bestselling author.",
+                            Title = "Things We Never Got Over",
+                            TotalCopies = 6
+                        },
+                        new
+                        {
+                            BookId = 4,
+                            Author = "Hector Garcia and Francesc Miralles",
+                            AvailableCopies = 4,
+                            CoverImagePath = "/images/book-covers/ikigai.png",
                             DateAdded = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genre = "Programming",
-                            ISBN = "978-0135957059",
-                            PublicationYear = 2019,
-                            Summary = "Your journey to mastery in software development with practical advice and best practices.",
-                            Title = "The Pragmatic Programmer",
+                            Genre = "Self-Help",
+                            ISBN = "978-0143130727",
+                            PublicationYear = 2017,
+                            Summary = "An international bestseller revealing the Japanese secret to finding purpose, meaning, and joy in life. Discover your reason for being.",
+                            Title = "Ikigai: The Japanese Secret to a Long and Happy Life",
                             TotalCopies = 5
                         },
                         new
                         {
                             BookId = 5,
-                            Author = "Steve McConnell",
-                            AvailableCopies = 2,
+                            Author = "Dr Carol S. Dweck",
+                            AvailableCopies = 3,
+                            CoverImagePath = "/images/book-covers/mindset.png",
                             DateAdded = new DateTime(2023, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genre = "Programming",
-                            ISBN = "978-0735619678",
-                            PublicationYear = 2004,
-                            Summary = "A practical guide to software construction covering design, coding, debugging, and testing.",
-                            Title = "Code Complete: A Practical Handbook of Software Construction",
-                            TotalCopies = 3
+                            Genre = "Psychology",
+                            ISBN = "978-1780332000",
+                            PublicationYear = 2017,
+                            Summary = "World-renowned Stanford psychologist Carol Dweck shows how success can be influenced by how we think about our talents and abilities. The growth mindset creates motivation and productivity.",
+                            Title = "Mindset: Changing the way you think to fulfil your potential",
+                            TotalCopies = 4
                         },
                         new
                         {
                             BookId = 6,
-                            Author = "Eric Freeman",
-                            AvailableCopies = 3,
-                            DateAdded = new DateTime(2023, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genre = "Software Engineering",
-                            ISBN = "978-0596007126",
-                            PublicationYear = 2004,
-                            Summary = "A brain-friendly guide to design patterns with easy-to-understand explanations.",
-                            Title = "Head First Design Patterns",
-                            TotalCopies = 3
-                        },
-                        new
-                        {
-                            BookId = 7,
-                            Author = "Martin Fowler",
-                            AvailableCopies = 4,
-                            DateAdded = new DateTime(2023, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genre = "Programming",
-                            ISBN = "978-0134757599",
-                            PublicationYear = 2018,
-                            Summary = "Essential guide to improving code structure and design without changing its behavior.",
-                            Title = "Refactoring: Improving the Design of Existing Code",
-                            TotalCopies = 4
-                        },
-                        new
-                        {
-                            BookId = 8,
-                            Author = "Robert C. Martin",
-                            AvailableCopies = 3,
-                            DateAdded = new DateTime(2023, 12, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genre = "Professional Development",
-                            ISBN = "978-0137081073",
-                            PublicationYear = 2011,
-                            Summary = "Practical advice for becoming a true professional software developer.",
-                            Title = "The Clean Coder: A Code of Conduct for Professional Programmers",
-                            TotalCopies = 3
-                        },
-                        new
-                        {
-                            BookId = 9,
-                            Author = "Kyle Simpson",
+                            Author = "James Clear",
                             AvailableCopies = 5,
-                            DateAdded = new DateTime(2023, 12, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genre = "Web Development",
-                            ISBN = "978-1449335588",
-                            PublicationYear = 2014,
-                            Summary = "Deep dive into JavaScript's scope and closures mechanisms.",
-                            Title = "You Don't Know JS: Scope & Closures",
-                            TotalCopies = 5
-                        },
-                        new
-                        {
-                            BookId = 10,
-                            Author = "Marijn Haverbeke",
-                            AvailableCopies = 4,
-                            DateAdded = new DateTime(2023, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genre = "Web Development",
-                            ISBN = "978-1593279509",
+                            CoverImagePath = "/images/book-covers/atomic-habits.png",
+                            DateAdded = new DateTime(2023, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Genre = "Self-Help",
+                            ISBN = "978-0735211292",
                             PublicationYear = 2018,
-                            Summary = "A modern introduction to programming with JavaScript.",
-                            Title = "Eloquent JavaScript",
-                            TotalCopies = 4
+                            Summary = "Tiny changes, remarkable results. The phenomenal international bestseller with over 25 million copies sold. Transform your life with tiny changes in behavior, starting today.",
+                            Title = "Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones",
+                            TotalCopies = 6
                         });
                 });
 
@@ -236,7 +193,7 @@ namespace LibraryManagementSystem.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("BookRatings", (string)null);
+                    b.ToTable("BookRatings");
                 });
 
             modelBuilder.Entity("LibraryManagementSystem.Models.BorrowingConfiguration", b =>
@@ -267,7 +224,7 @@ namespace LibraryManagementSystem.Migrations
                     b.HasIndex("LibraryId")
                         .IsUnique();
 
-                    b.ToTable("BorrowingConfigurations", (string)null);
+                    b.ToTable("BorrowingConfigurations");
 
                     b.HasData(
                         new
@@ -324,7 +281,7 @@ namespace LibraryManagementSystem.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("BorrowingTransactions", (string)null);
+                    b.ToTable("BorrowingTransactions");
                 });
 
             modelBuilder.Entity("LibraryManagementSystem.Models.LibraryProfile", b =>
@@ -369,7 +326,7 @@ namespace LibraryManagementSystem.Migrations
                     b.HasIndex("CreatedByUserId")
                         .IsUnique();
 
-                    b.ToTable("LibraryProfiles", (string)null);
+                    b.ToTable("LibraryProfiles");
 
                     b.HasData(
                         new
@@ -430,7 +387,7 @@ namespace LibraryManagementSystem.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
 
                     b.HasData(
                         new
@@ -440,7 +397,7 @@ namespace LibraryManagementSystem.Migrations
                             FirstName = "Admin",
                             IsActive = true,
                             LastName = "Librarian",
-                            Password = "$2a$11$kd.lRYWl3l0aFlSnrc1TpOh1RssVVoirOtqVG2XGT5aHT27T.WBRC",
+                            Password = "$2a$11$iH5YB9NoY7WojumupQaaZuPrRxZcZfkDO2tQ.KU5yk2JXcDl4ZJ76",
                             PhoneNumber = "555-0100",
                             RegistrationDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Role = "Librarian"
@@ -452,7 +409,7 @@ namespace LibraryManagementSystem.Migrations
                             FirstName = "John",
                             IsActive = true,
                             LastName = "Doe",
-                            Password = "$2a$11$2JS5LDKFgcX2jjRsVrJhuekxnhp.qIF6eNxEt5V.PYpwANK7XinGG",
+                            Password = "$2a$11$26strlxj2B5fpNpt885DyO3mu6/sTFF1Mf4OzCFcbP1uzdDn0MCxe",
                             PhoneNumber = "555-0101",
                             RegistrationDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Role = "Member"
@@ -464,7 +421,7 @@ namespace LibraryManagementSystem.Migrations
                             FirstName = "Jane",
                             IsActive = true,
                             LastName = "Smith",
-                            Password = "$2a$11$/EI9VrTGKQ1zpiwX26fCCuDJb3djSy.zhBeA/AgXsrssY3xbTc0Se",
+                            Password = "$2a$11$MErRrJwU90quVk4OyLZJt.KSwHMCDME6nYePa6NG6AyBq2mwuS19m",
                             PhoneNumber = "555-0102",
                             RegistrationDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Role = "Member"
